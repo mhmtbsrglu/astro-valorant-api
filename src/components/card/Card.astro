@@ -1,0 +1,39 @@
+---
+interface Props {
+  id: string;
+  imageSrc: string;
+  displayName: string;
+  description: string;
+}
+const { imageSrc, displayName, description, id } = Astro.props as Props;
+---
+
+<div
+  class="flex flex-col cursor-pointer w-[19rem] group bg- rounded-xl overflow-hidden"
+>
+  <div class="bg- subpixel-antialiased overflow-hidden relative">
+    <img
+      src={imageSrc}
+      alt=""
+      class="flex-1 transition-all rounded-t-xl h-full w-full scale-105 group-hover:scale-100"
+      srcset=""
+    />
+    <img
+      src={imageSrc}
+      alt=""
+      class="absolute inset-0 flex-1 transition-all rounded-t-xl h-full w-full scale-105 group-hover:scale-150 opacity-0 group-hover:opacity-100"
+      srcset=""
+    />
+  </div>
+  <div class="flex-1 text-white bg-gray-900 p-4 flex flex-col">
+    <div class="flex-1 rounded-t-md p-2 transition-all w-full min-h-unit-24">
+      <span class="mb-10">{displayName}</span>
+    </div>
+    <a
+      href={`/sets/detail/${id}`}
+      class="bg-gray-800 text-white text-center p-2 font-semibold hover:ring-4 hover:bg-rose-500 transition-all ring-0 ring-rose-500/50 rounded"
+    >
+      <span>Detayı Göster</span>
+    </a>
+  </div>
+</div>

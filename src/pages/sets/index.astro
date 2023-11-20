@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/card/Card.astro";
+interface Bundles {
+  uuid: string;
+  displayName: string;
+  description: string;
+  displayIcon: string;
+}
+
+const request = await fetch("https://valorant-api.com/v1/bundles");
+const json = await request.json();
+const data = (await json.data) as Bundles[];
+---
+
+<Layout title="Setler">
+  <div class="mx-auto max-w-7xl gap-2">
+    <div class="flex flex-wrap gap-4">
+      {
+        data.map((data: Bundles) => {
+          return (
+            <Card
+              id={data.uuid}
+              imageSrc={data.displayIcon}
+              description={data.description}
+              displayName={data.displayName}
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>

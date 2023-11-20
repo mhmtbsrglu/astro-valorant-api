@@ -1,0 +1,46 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+interface Bundles {
+  uuid: string;
+  displayName: string;
+  description: string;
+  displayIcon: string;
+}
+
+export const getStaticPaths = async () => {
+  const request = await fetch("https://valorant-api.com/v1/bundles");
+  const json = await request.json();
+  const data = json.data as Bundles[];
+  //Id kayıt alanı
+  if (data) {
+    const paths = data.map((bundle) => ({
+      params: {
+        id: bundle.uuid,
+      },
+      props: {
+        post: bundle,
+      },
+    }));
+
+    return paths;
+  } else {
+    return [];
+  }
+};
+
+const { post } = Astro.props;
+---
+
+<Layout title="Setler">
+  <div class="mx-auto max-w-7xl p-2 gap-2">
+    <div class="flex flex-wrap gap-10 my-10">
+      <div class="text-2xl font-semibold flex items-center space-x-2">
+        <span>Set:</span>
+        <span class="font-normal">{post.displayName}</span>
+      </div>
+      <div>
+        <img src={post.displayIcon} class="rounded-xl" alt="" />
+      </div>
+    </div>
+  </div>
+</Layout>
